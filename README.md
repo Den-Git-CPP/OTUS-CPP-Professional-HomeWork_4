@@ -28,4 +28,4 @@
 
 2. На этапе сборки вызов `doxygen` и публикацию html-версии документации на github-pages.
 
-📚[Documentation](https://den-git-cpp.github.io/OTUS-CPP-Professional-HomeWork_4/)
+📚[Documentation](https://den-git-cpp.github.io/OTUS-CPP-Professional-HomeWork_4/index.html)
