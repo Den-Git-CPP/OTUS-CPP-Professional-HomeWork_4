@@ -6,20 +6,18 @@
 #include <vector>
 #include <tuple>
 
-///@file
-
 /**
- * @note 
  * Convert an UInt32 into an IP String 
  * String equivilant format: "xxx.xxx.xxx.xxx" 
  * public String UInt32ToIPAdd(UInt32 UIntIP) {
- *    return (UIntIP >> 24) + "." +             \n
- *          ((UIntIP >> 16) & 0xff) + "." +     \n
- *          ((UIntIP >> 8) & 0xff) + "." +      \n
+ *    return (UIntIP >> 24) + "." +              
+ *          ((UIntIP >> 16) & 0xff) + "." +     
+ *          ((UIntIP >> 8) & 0xff) + "." +       
  *          (UIntIP & 0xff);
  *  }
  */
- 
+
+///@file
  
  //integral type
 /**
