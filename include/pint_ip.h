@@ -1,29 +1,27 @@
 #pragma once
-
 #include <iostream>
-
 #include <type_traits>
 #include <string>
-
 #include <list>
 #include <vector>
 #include <tuple>
+
 ///@file
+
 /**
  * @note 
- * /// <summary>Convert an UInt32 into an IP String</summary>
- * /// <param name="UIntIP">UInt32 to convert into a String.</param>
- * /// <returns>String equivilant:\nFormat: "xxx.xxx.xxx.xxx"</returns>
+ * Convert an UInt32 into an IP String 
+ * String equivilant format: "xxx.xxx.xxx.xxx" 
  * public String UInt32ToIPAdd(UInt32 UIntIP) {
- *    return (UIntIP >> 24) + "." + 
- *          ((UIntIP >> 16) & 0xff) + "." + 
- *          ((UIntIP >> 8) & 0xff) + "." + 
+ *    return (UIntIP >> 24) + "." +             \n
+ *          ((UIntIP >> 16) & 0xff) + "." +     \n
+ *          ((UIntIP >> 8) & 0xff) + "." +      \n
  *          (UIntIP & 0xff);
  *  }
  */
-
-
-//integral type
+ 
+ 
+ //integral type
 /**
  * @brief   Адрес представлен в виде произвольного целочисленного типа.
  * 
@@ -86,3 +84,5 @@ std::enable_if_t<is_vector_or_list<T>::value> print_ip(const T& ip) {
 * @tparam   T - std::tuple
 * @param    ip - IP aдрес 
 */
+
+
