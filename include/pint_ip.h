@@ -21,10 +21,10 @@
  
  //integral type
 /**
- * @brief   Адрес представлен в виде произвольного целочисленного типа.
+ * @brief Адрес представлен в виде произвольного целочисленного типа.
  * 
- * @tparam  T - integral type)
- * @param   ip - IP aдрес 
+ * @tparam T - integral type
+ * @param ip - IP aдрес 
  */
 
 template <typename T>
@@ -42,10 +42,10 @@ template <>
 struct is_string<std::string> : std::true_type {};
 
 /**
- * @brief   Адрес представлен в виде строки
+ * @brief Адрес представлен в виде строки
  * 
- * @tparam  T - std::string type
- * @param   ip - IP aдрес 
+ * @tparam T - std::string type
+ * @param ip - IP aдрес 
  */
 template <typename T>
 typename std::enable_if<is_string<T>::value>::type print_ip(const T& ip) {
@@ -63,10 +63,10 @@ template <typename... Args>
 struct is_vector_or_list<std::list<Args ...> > : std::true_type {};
 
 /**
-* @brief    Адрес представлен в виде контейнеров std::list/std::vector
+* @brief Адрес представлен в виде контейнеров std::list/std::vector
 *
-* @tparam   T - std::list/std::vector type
-* @param    ip - IP aдрес 
+* @tparam T - std::list/std::vector type
+* @param ip - IP aдрес 
 */
 template <typename T>
 std::enable_if_t<is_vector_or_list<T>::value> print_ip(const T& ip) {
@@ -77,10 +77,44 @@ std::enable_if_t<is_vector_or_list<T>::value> print_ip(const T& ip) {
 }
 
 /**
-* @brief    Адрес представлен в виде `std::tuple`
-*
-* @tparam   T - std::tuple
-* @param    ip - IP aдрес 
-*/
+ * @brief Вспомогательный класс с вспомогательной функцией для печати Tuple любого размера 
+ * 
+ * @tparam T - std::tuple
+ * @tparam N - размер std::tuple
+ * /// References: https://en.cppreference.com/w/cpp/utility/tuple/tuple_cat
+ * /// References: https://stackoverflow.com/questions/6245735/pretty-print-stdtuple
+ */
 
+template<class Tuple, std::size_t N>
+struct TuplePrinter {
+	static void print(const Tuple& t) {
+		TuplePrinter<Tuple, N - 1>::print(t);
+		std::cout << "." << std::get<N - 1>(t);
+	}
+};
+/**
+ * @brief Вспомогательная класс с вспомогательной функцией для печати Tuple одного элемента  
+ * 
+ * @tparam T - std::tuple
+ * @tparam N - размер std::tuple =1
+ * /// References: https://en.cppreference.com/w/cpp/utility/tuple/tuple
+ * /// References: https://en.cppreference.com/w/cpp/utility/tuple/tuple_cat
+ * /// References: https://stackoverflow.com/questions/6245735/pretty-print-stdtuple
+  */
+
+template<class Tuple>
+struct TuplePrinter<Tuple, 1> {
+	static void print(const Tuple& t) {
+		std::cout << std::get<0>(t);
+	}
+};
+/**
+ * @brief Вспомогательная функцией для печати Tuple одного элемента 
+ * 
+ * @tparam Args — значения, используемые для инициализации каждого элемента кортежа 
+ */
+template<class... Args>
+void print(const std::tuple<Args...>& t) {
+	TuplePrinter<decltype(t), sizeof...(Args)>::print(t);
+}
 

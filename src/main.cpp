@@ -9,11 +9,6 @@
  * @date 15.05.2022 
  */
 
-/**
- * @todo print_ip(tuple);
- * 
- * */
-
 int main( )
 {
   print_ip(char(-1)); 
@@ -35,8 +30,10 @@ int main( )
   std::cout << '\n';
 
   print_ip(std::list<unsigned int>{192, 168, 1, 1});
+  std::cout << '\n';
 
-
+  print(std::make_tuple("192", "168", "1", "1"));
+	std::cout << "\n";
  
  return 0; 
 }
