@@ -84,7 +84,7 @@ TEST(print_ip, type_vector_string) {
   strm<<"192.168.1.4";	  
   std::streambuf *sbuf =std::cout.rdbuf();
   std::cout.rdbuf(buffer.rdbuf());
-  print(std::make_tuple("192", "168", "1", "4"));
+  print_ip(std::make_tuple("192", "168", "1", "4"));
   std::cout.rdbuf(sbuf);
   
   ASSERT_EQ(buffer.str(), strm.str());
@@ -95,7 +95,7 @@ TEST(print_ip, type_vector_string) {
   strm<<"192.168.1.4";	  
   std::streambuf *sbuf =std::cout.rdbuf();
   std::cout.rdbuf(buffer.rdbuf());
-  print(std::make_tuple(192, 168, 1, 4));
+  print_ip(std::make_tuple(192, 168, 1, 4));
   std::cout.rdbuf(sbuf);
   
   ASSERT_EQ(buffer.str(), strm.str());

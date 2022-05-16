@@ -58,22 +58,22 @@ struct all_same<T, T, Args...> : public all_same<T, Args ... > {};
 
 template<class Tuple, std::size_t N>
 struct TuplePrinter {
-	static void print(const Tuple& t) {
-		TuplePrinter<Tuple, N - 1>::print(t);
+	static void print_ip(const Tuple& t) {
+		TuplePrinter<Tuple, N - 1>::print_ip(t);
 		std::cout << "." << std::get<N - 1>(t);
 	}
 };
 
 template<class Tuple>
 struct TuplePrinter<Tuple, 1> {
-	static void print(const Tuple& t) {
+	static void print_ip(const Tuple& t) {
 		std::cout << std::get<0>(t);
 	}
 };
 
 template<class... Args>
-void print(const std::tuple<Args...>& t) {
+void print_ip(const std::tuple<Args...>& t) {
   static_assert(all_same<Args ...>::value, "Params must have same types");
-	TuplePrinter<decltype(t), sizeof...(Args)>::print(t);
+	TuplePrinter<decltype(t), sizeof...(Args)>::print_ip(t);
 }
 

@@ -5,12 +5,9 @@
 #include <list>
 #include <vector>
 #include <tuple>
- /// References: https://en.cppreference.com/w/cpp/utility/tuple/tuple
- /// References: https://en.cppreference.com/w/cpp/utility/tuple/tuple_cat
- /// References: https://stackoverflow.com/questions/6245735/pretty-print-stdtuple
- /// References: https://stackoverflow.com/questions/37236109/how-to-check-the-type-of-passed-arguments-to-variadic-function
-
 /**
+ * @page Полезные ссылки
+ * 
  * Convert an UInt32 into an IP String 
  * String equivilant format: "xxx.xxx.xxx.xxx" 
  * public String UInt32ToIPAdd(UInt32 UIntIP) {
@@ -19,10 +16,19 @@
  *          ((UIntIP >> 8) & 0xff) + "." +       
  *          (UIntIP & 0xff);
  *  }
+ * 
+ *  References: https://en.cppreference.com/w/cpp/utility/tuple/tuple
+ * 
+ *  References: https://en.cppreference.com/w/cpp/utility/tuple/tuple_cat
+ * 
+ *  References: https://stackoverflow.com/questions/6245735/pretty-print-stdtuple
+ * 
+ *  References: https://stackoverflow.com/questions/37236109/how-to-check-the-type-of-passed-arguments-to-variadic-function
+ * 
  */
 
+
 ///@file
- 
  //integral type
 /**
  * @brief Адрес представлен в виде произвольного целочисленного типа.
@@ -103,8 +109,8 @@ struct all_same<T, T, Args...> : public all_same<T, Args ... > {};
 
 template<class Tuple, std::size_t N>
 struct TuplePrinter {
-	static void print(const Tuple& t) {
-		TuplePrinter<Tuple, N - 1>::print(t);
+	static void print_ip(const Tuple& t) {
+		TuplePrinter<Tuple, N - 1>::print_ip(t);
 		std::cout << "." << std::get<N - 1>(t);
 	}
 };
@@ -117,7 +123,7 @@ struct TuplePrinter {
 
 template<class Tuple>
 struct TuplePrinter<Tuple, 1> {
-	static void print(const Tuple& t) {
+	static void print_ip(const Tuple& t) {
 		std::cout << std::get<0>(t);
 	}
 };
@@ -127,9 +133,9 @@ struct TuplePrinter<Tuple, 1> {
  * @tparam Args — значения, используемые для инициализации каждого элемента кортежа 
  */
 template<class... Args>
-void print(const std::tuple<Args...>& t) {
+void print_ip(const std::tuple<Args...>& t) {
   //Код для проверки того, имеют ли переданные аргументы один и тот же тип
   static_assert(all_same<Args ...>::value, "Params must have same types");
-	TuplePrinter<decltype(t), sizeof...(Args)>::print(t);
+	TuplePrinter<decltype(t), sizeof...(Args)>::print_ip(t);
 }
 
