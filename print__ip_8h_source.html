@@ -1,0 +1,159 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.9.2"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Print IP address: Исходный файл include/print_ip.h</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">Print IP address<span id="projectnumber">&#160;0.0.1</span>
+   </div>
+   <div id="projectbrief">Печать условного IP-адреса с различными входными параметрами с использованием механизма SFINAE</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Создано системой Doxygen 1.9.2 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search",'Поиск','.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('',true,false,'search.php','Поиск');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<div id="nav-path" class="navpath">
+  <ul>
+<li class="navelem"><a class="el" href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li>  </ul>
+</div>
+</div><!-- top -->
+<div class="header">
+  <div class="headertitle"><div class="title">print_ip.h</div></div>
+</div><!--header-->
+<div class="contents">
+<a href="print__ip_8h.html">См. документацию.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#pragma once</span></div>
+<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="preprocessor">#include &lt;iostream&gt;</span></div>
+<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="preprocessor">#include &lt;type_traits&gt;</span></div>
+<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="preprocessor">#include &lt;string&gt;</span></div>
+<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="preprocessor">#include &lt;list&gt;</span></div>
+<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="preprocessor">#include &lt;vector&gt;</span></div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="preprocessor">#include &lt;tuple&gt;</span></div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span> <span class="comment">//integral type</span></div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span><span class="comment"></span><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno"><a class="line" href="print__ip_8h.html#a315c44473ecbdcc3c0897bb0803b6393">   41</a></span><span class="keyword">typename</span> std::enable_if_t&lt;std::is_integral&lt;T&gt;::value&gt; <a class="code hl_function" href="print__ip_8h.html#a315c44473ecbdcc3c0897bb0803b6393">print_ip</a>(<span class="keyword">const</span> T&amp; ip) {</div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>  <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> sz = <span class="keyword">sizeof</span>(T); sz != 0; --sz) {</div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>    std::cout &lt;&lt; ((ip &gt;&gt; (8 * (sz - 1))) &amp; 0xff)</div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>      &lt;&lt; (sz != 1 ? <span class="stringliteral">&quot;.&quot;</span> : <span class="stringliteral">&quot;&quot;</span>);</div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>  }</div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>}</div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span> </div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span><span class="comment">//std::string type</span></div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno"><a class="line" href="structis__string.html">   50</a></span><span class="keyword">struct </span><a class="code hl_struct" href="structis__string.html">is_string</a> : std::false_type {};</div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span><span class="keyword">template</span> &lt;&gt;</div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno"><a class="line" href="structis__string_3_01std_1_1string_01_4.html">   52</a></span><span class="keyword">struct </span><a class="code hl_struct" href="structis__string.html">is_string</a>&lt;std::string&gt; : std::true_type {};</div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span> </div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno"><a class="line" href="print__ip_8h.html#aee29fd81429372c2eebd46aee44967ee">   61</a></span><span class="keyword">typename</span> std::enable_if&lt;is_string&lt;T&gt;::value&gt;::type <a class="code hl_function" href="print__ip_8h.html#a315c44473ecbdcc3c0897bb0803b6393">print_ip</a>(<span class="keyword">const</span> T&amp; ip) {</div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>  std::cout &lt;&lt; ip;</div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>}</div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span> </div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span> </div>
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno"><a class="line" href="structis__vector__or__list.html">   67</a></span><span class="keyword">struct </span><a class="code hl_struct" href="structis__vector__or__list.html">is_vector_or_list</a> : std::false_type {};</div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span><span class="comment">//std::vector</span></div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span><span class="keyword">template</span> &lt;<span class="keyword">typename</span>... Args&gt;</div>
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno"><a class="line" href="structis__vector__or__list_3_01std_1_1vector_3_01_args_01_8_8_8_01_4_01_4.html">   70</a></span><span class="keyword">struct </span><a class="code hl_struct" href="structis__vector__or__list.html">is_vector_or_list</a>&lt;std::vector&lt;Args ...&gt; &gt; : std::true_type {};</div>
+<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span><span class="comment">//std::list</span></div>
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span><span class="keyword">template</span> &lt;<span class="keyword">typename</span>... Args&gt;</div>
+<div class="line"><a id="l00073" name="l00073"></a><span class="lineno"><a class="line" href="structis__vector__or__list_3_01std_1_1list_3_01_args_01_8_8_8_01_4_01_4.html">   73</a></span><span class="keyword">struct </span><a class="code hl_struct" href="structis__vector__or__list.html">is_vector_or_list</a>&lt;std::list&lt;Args ...&gt; &gt; : std::true_type {};</div>
+<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span> </div>
+<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</div>
+<div class="line"><a id="l00082" name="l00082"></a><span class="lineno"><a class="line" href="print__ip_8h.html#af202ae34c3a41821c9c365266980cdd7">   82</a></span>std::enable_if_t&lt;is_vector_or_list&lt;T&gt;::value&gt; <a class="code hl_function" href="print__ip_8h.html#a315c44473ecbdcc3c0897bb0803b6393">print_ip</a>(<span class="keyword">const</span> T&amp; ip) {</div>
+<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span>  <span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span>&amp; it : ip) {</div>
+<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span>    std::cout &lt;&lt; it;</div>
+<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span>    std::cout &lt;&lt; (&amp;it != &amp;ip.back() ? <span class="stringliteral">&quot;.&quot;</span> : <span class="stringliteral">&quot;&quot;</span>);</div>
+<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span>  }</div>
+<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span>}</div>
+<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span><span class="keyword">template</span> &lt;<span class="keyword">typename</span> ... Args&gt;</div>
+<div class="line"><a id="l00095" name="l00095"></a><span class="lineno"><a class="line" href="structall__same.html">   95</a></span><span class="keyword">struct </span><a class="code hl_struct" href="structall__same.html">all_same</a> : <span class="keyword">public</span> std::false_type {};</div>
+<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span> </div>
+<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</div>
+<div class="line"><a id="l00098" name="l00098"></a><span class="lineno"><a class="line" href="structall__same_3_01_t_01_4.html">   98</a></span><span class="keyword">struct </span><a class="code hl_struct" href="structall__same.html">all_same</a>&lt;T&gt; : <span class="keyword">public</span> std::true_type {};</div>
+<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span> </div>
+<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T, <span class="keyword">typename</span> ... Args&gt;</div>
+<div class="line"><a id="l00101" name="l00101"></a><span class="lineno"><a class="line" href="structall__same_3_01_t_00_01_t_00_01_args_8_8_8_01_4.html">  101</a></span><span class="keyword">struct </span><a class="code hl_struct" href="structall__same.html">all_same</a>&lt;T, T, Args...&gt; : <span class="keyword">public</span> <a class="code hl_struct" href="structall__same.html">all_same</a>&lt;T, Args ... &gt; {};</div>
+<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span> </div>
+<div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span><span class="keyword">template</span>&lt;<span class="keyword">class</span> Tuple, std::<span class="keywordtype">size_t</span> N&gt;</div>
+<div class="line"><a id="l00111" name="l00111"></a><span class="lineno"><a class="line" href="struct_tuple_printer.html">  111</a></span><span class="keyword">struct </span><a class="code hl_struct" href="struct_tuple_printer.html">TuplePrinter</a> {</div>
+<div class="line"><a id="l00112" name="l00112"></a><span class="lineno"><a class="line" href="struct_tuple_printer.html#a120590da573108285df28649b75588e6">  112</a></span>    <span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code hl_function" href="struct_tuple_printer.html#a120590da573108285df28649b75588e6">print_ip</a>(<span class="keyword">const</span> Tuple&amp; t) {</div>
+<div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span>        <a class="code hl_function" href="struct_tuple_printer.html#a120590da573108285df28649b75588e6">TuplePrinter&lt;Tuple, N - 1&gt;::print_ip</a>(t);</div>
+<div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span>        std::cout &lt;&lt; <span class="stringliteral">&quot;.&quot;</span> &lt;&lt; std::get&lt;N - 1&gt;(t);</div>
+<div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span>    }</div>
+<div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span>};</div>
+<div class="line"><a id="l00124" name="l00124"></a><span class="lineno">  124</span><span class="keyword">template</span>&lt;<span class="keyword">class</span> Tuple&gt;</div>
+<div class="line"><a id="l00125" name="l00125"></a><span class="lineno"><a class="line" href="struct_tuple_printer_3_01_tuple_00_011_01_4.html">  125</a></span><span class="keyword">struct </span><a class="code hl_struct" href="struct_tuple_printer.html">TuplePrinter</a>&lt;Tuple, 1&gt; {</div>
+<div class="line"><a id="l00126" name="l00126"></a><span class="lineno"><a class="line" href="struct_tuple_printer_3_01_tuple_00_011_01_4.html#aa08d81da22fafa1380537f80fd003b18">  126</a></span>    <span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code hl_function" href="struct_tuple_printer_3_01_tuple_00_011_01_4.html#aa08d81da22fafa1380537f80fd003b18">print_ip</a>(<span class="keyword">const</span> Tuple&amp; t) {</div>
+<div class="line"><a id="l00127" name="l00127"></a><span class="lineno">  127</span>        std::cout &lt;&lt; std::get&lt;0&gt;(t);</div>
+<div class="line"><a id="l00128" name="l00128"></a><span class="lineno">  128</span>    }</div>
+<div class="line"><a id="l00129" name="l00129"></a><span class="lineno">  129</span>};</div>
+<div class="line"><a id="l00135" name="l00135"></a><span class="lineno">  135</span><span class="keyword">template</span>&lt;<span class="keyword">class</span>... Args&gt;</div>
+<div class="line"><a id="l00136" name="l00136"></a><span class="lineno"><a class="line" href="print__ip_8h.html#ae11d9ef44a8bc10033c7afa7b4470448">  136</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="print__ip_8h.html#a315c44473ecbdcc3c0897bb0803b6393">print_ip</a>(<span class="keyword">const</span> std::tuple&lt;Args...&gt;&amp; t) {</div>
+<div class="line"><a id="l00137" name="l00137"></a><span class="lineno">  137</span>  <span class="comment">//Код для проверки того, имеют ли переданные аргументы один и тот же тип</span></div>
+<div class="line"><a id="l00138" name="l00138"></a><span class="lineno">  138</span>  <span class="keyword">static_assert</span>(<a class="code hl_struct" href="structall__same.html">all_same</a>&lt;Args ...&gt;::value, <span class="stringliteral">&quot;Params must have same types&quot;</span>);</div>
+<div class="line"><a id="l00139" name="l00139"></a><span class="lineno">  139</span>    <a class="code hl_struct" href="struct_tuple_printer.html">TuplePrinter</a>&lt;<span class="keyword">decltype</span>(t), <span class="keyword">sizeof</span>...(Args)&gt;<a class="code hl_function" href="print__ip_8h.html#a315c44473ecbdcc3c0897bb0803b6393">::print_ip</a>(t);</div>
+<div class="line"><a id="l00140" name="l00140"></a><span class="lineno">  140</span>}</div>
+<div class="line"><a id="l00141" name="l00141"></a><span class="lineno">  141</span> </div>
+<div class="ttc" id="aprint__ip_8h_html_a315c44473ecbdcc3c0897bb0803b6393"><div class="ttname"><a href="print__ip_8h.html#a315c44473ecbdcc3c0897bb0803b6393">print_ip</a></div><div class="ttdeci">std::enable_if_t&lt; std::is_integral&lt; T &gt;::value &gt; print_ip(const T &amp;ip)</div><div class="ttdoc">Адрес представлен в виде произвольного целочисленного типа.</div><div class="ttdef"><b>Definition:</b> print_ip.h:41</div></div>
+<div class="ttc" id="astruct_tuple_printer_3_01_tuple_00_011_01_4_html_aa08d81da22fafa1380537f80fd003b18"><div class="ttname"><a href="struct_tuple_printer_3_01_tuple_00_011_01_4.html#aa08d81da22fafa1380537f80fd003b18">TuplePrinter&lt; Tuple, 1 &gt;::print_ip</a></div><div class="ttdeci">static void print_ip(const Tuple &amp;t)</div><div class="ttdef"><b>Definition:</b> print_ip.h:126</div></div>
+<div class="ttc" id="astruct_tuple_printer_html"><div class="ttname"><a href="struct_tuple_printer.html">TuplePrinter</a></div><div class="ttdoc">Вспомогательный класс с вспомогательной функцией для печати Tuple любого размера</div><div class="ttdef"><b>Definition:</b> print_ip.h:111</div></div>
+<div class="ttc" id="astruct_tuple_printer_html_a120590da573108285df28649b75588e6"><div class="ttname"><a href="struct_tuple_printer.html#a120590da573108285df28649b75588e6">TuplePrinter::print_ip</a></div><div class="ttdeci">static void print_ip(const Tuple &amp;t)</div><div class="ttdef"><b>Definition:</b> print_ip.h:112</div></div>
+<div class="ttc" id="astructall__same_html"><div class="ttname"><a href="structall__same.html">all_same</a></div><div class="ttdoc">Вспомогательный функции помогающие определить однотипность элементов в Tuple.</div><div class="ttdef"><b>Definition:</b> print_ip.h:95</div></div>
+<div class="ttc" id="astructis__string_html"><div class="ttname"><a href="structis__string.html">is_string</a></div><div class="ttdef"><b>Definition:</b> print_ip.h:50</div></div>
+<div class="ttc" id="astructis__vector__or__list_html"><div class="ttname"><a href="structis__vector__or__list.html">is_vector_or_list</a></div><div class="ttdef"><b>Definition:</b> print_ip.h:67</div></div>
+</div><!-- fragment --></div><!-- contents -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+Создано системой&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.2
+</small></address>
+</body>
+</html>
