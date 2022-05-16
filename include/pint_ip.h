@@ -5,6 +5,10 @@
 #include <list>
 #include <vector>
 #include <tuple>
+ /// References: https://en.cppreference.com/w/cpp/utility/tuple/tuple
+ /// References: https://en.cppreference.com/w/cpp/utility/tuple/tuple_cat
+ /// References: https://stackoverflow.com/questions/6245735/pretty-print-stdtuple
+ /// References: https://stackoverflow.com/questions/37236109/how-to-check-the-type-of-passed-arguments-to-variadic-function
 
 /**
  * Convert an UInt32 into an IP String 
@@ -75,14 +79,26 @@ std::enable_if_t<is_vector_or_list<T>::value> print_ip(const T& ip) {
     std::cout << (&it != &ip.back() ? "." : "");
   }
 }
+/**
+ * @brief Вспомогательный функции помогающие определить однотипность элементов в Tuple
+ * 
+ * @tparam Args — значения, используемые для инициализации каждого элемента кортежа
+ */
+
+template <typename ... Args>
+struct all_same : public std::false_type {};
+
+template <typename T>
+struct all_same<T> : public std::true_type {};
+
+template <typename T, typename ... Args>
+struct all_same<T, T, Args...> : public all_same<T, Args ... > {};
 
 /**
  * @brief Вспомогательный класс с вспомогательной функцией для печати Tuple любого размера 
  * 
  * @tparam T - std::tuple
  * @tparam N - размер std::tuple
- * /// References: https://en.cppreference.com/w/cpp/utility/tuple/tuple_cat
- * /// References: https://stackoverflow.com/questions/6245735/pretty-print-stdtuple
  */
 
 template<class Tuple, std::size_t N>
@@ -93,14 +109,11 @@ struct TuplePrinter {
 	}
 };
 /**
- * @brief Вспомогательная класс с вспомогательной функцией для печати Tuple одного элемента  
+ * @brief Вспомогательный класс с вспомогательной функцией для печати Tuple одного элемента  
  * 
  * @tparam T - std::tuple
  * @tparam N - размер std::tuple =1
- * /// References: https://en.cppreference.com/w/cpp/utility/tuple/tuple
- * /// References: https://en.cppreference.com/w/cpp/utility/tuple/tuple_cat
- * /// References: https://stackoverflow.com/questions/6245735/pretty-print-stdtuple
-  */
+ */
 
 template<class Tuple>
 struct TuplePrinter<Tuple, 1> {
@@ -115,6 +128,8 @@ struct TuplePrinter<Tuple, 1> {
  */
 template<class... Args>
 void print(const std::tuple<Args...>& t) {
+  //Код для проверки того, имеют ли переданные аргументы один и тот же тип
+  static_assert(all_same<Args ...>::value, "Params must have same types");
 	TuplePrinter<decltype(t), sizeof...(Args)>::print(t);
 }
 
